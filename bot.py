@@ -15,7 +15,15 @@ def send_posts(message):
     links = soup.find_all('a', {'class':'post__title_link'})
     titles = soup.find_all('h2', {'class':'post__title'})
     bot.send_message(message.chat.id, '\n'.join([title.get_text().strip()+'\n'+link['href']+'\n' for title,link in zip(titles, links)]))
-   
+@bot.message_handler(commands=['posts'])
+def send_posts(message):
+    req = requests.get('https://store.nike.com/ru/ru_ru/pw/мужчины-распродажа-обувь/47Z7puZb8dZdmcZ8yzZoneZoi3?sortOrder=finalprice|asc')
+    soup = BeautifulSoup(req.text, 'html.parser')
+    data = [div['data-pdpurl'] for div in divs[:10]]
+    for d in data:
+        bot.send_message(message.chat.id, d)
+        time.sleep(0.3)
+ 
 if __name__ == '__main__':
     while True:
         try:
