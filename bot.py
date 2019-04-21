@@ -1,13 +1,17 @@
 import telebot
+import requests
+import time
 
 bot = telebot.TeleBot('776916341:AAHSc2BAGKHguLsfOoguAfN0Ogiz4bliv_0')
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start'])
 def send_welcome(message):
-	bot.reply_to(message, "Howdy, how are you doing?")
-
-@bot.message_handler(func=lambda message: True)
-def echo_all(message):
-	bot.reply_to(message, message.text)
-
-bot.polling()
+    bot.send_message(message.chat.id, 'Дарова')
+    
+if __name__ == '__main__':
+    while True:
+        try:
+            bot.polling(none_stop=True, interval = 0, timeout = 20) 
+        except Exception as err:
+            print("MAIN ", err)
+            time.sleep(1)
