@@ -6,8 +6,16 @@ bot = telebot.TeleBot('776916341:AAHSc2BAGKHguLsfOoguAfN0Ogiz4bliv_0')
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, 'Дарова')
-    
+    bot.send_message(message.chat.id, 'Я жив!')
+
+@bot.message_handler(commands=['posts'])
+def send_posts(message):
+	req = requests.get('https://habr.com/ru/')
+	soup = BeautifulSoup(req.text, 'html.parser')
+	links = soup.find_all('a', {'class':'post__title_link'})
+	
+    bot.send_message(message.chat.id, '\n'.join([link['href'] for link in links]))
+   
 if __name__ == '__main__':
     while True:
         try:
