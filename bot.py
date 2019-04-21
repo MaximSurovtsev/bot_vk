@@ -10,10 +10,9 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['posts'])
 def send_posts(message):
-	req = requests.get('https://habr.com/ru/')
-	soup = BeautifulSoup(req.text, 'html.parser')
-	links = soup.find_all('a', {'class':'post__title_link'})
-	
+    req = requests.get('https://habr.com/ru/')
+    soup = BeautifulSoup(req.text, 'html.parser')
+    links = soup.find_all('a', {'class':'post__title_link'})
     bot.send_message(message.chat.id, '\n'.join([link['href'] for link in links]))
    
 if __name__ == '__main__':
