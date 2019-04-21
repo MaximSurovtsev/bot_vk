@@ -1,7 +1,7 @@
 import telebot
 import requests
 import time
-
+from bs4 import BeautifulSoup
 bot = telebot.TeleBot('776916341:AAHSc2BAGKHguLsfOoguAfN0Ogiz4bliv_0')
 
 @bot.message_handler(commands=['start'])
