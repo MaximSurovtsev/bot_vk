@@ -19,6 +19,7 @@ def send_posts(message):
 def send_posts(message):
     req = requests.get('https://store.nike.com/ru/ru_ru/pw/мужчины-распродажа-обувь/47Z7puZb8dZdmcZ8yzZoneZoi3?sortOrder=finalprice|asc')
     soup = BeautifulSoup(req.text, 'html.parser')
+    divs = soup.find_all('div', {'class': 'grid-item fullSize'})
     data = [div['data-pdpurl'] for div in divs[:10]]
     for d in data:
         bot.send_message(message.chat.id, d)
